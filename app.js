@@ -30,7 +30,7 @@ app.get('/api/songs', (req, res) => {
   const myQuery = `SELECT * FROM ${NOME_TABELA}`
   connection.query(myQuery, (err, results) => {
     if (err) {
-      return res.status(500).send('Erro ao buscar songs: ' + err.message);
+      return res.status(500).send('Erro ao buscar música: ' + err.message);
     }
     res.json(results);
   });
@@ -56,7 +56,7 @@ app.post('/api/songs', (req, res) => {
     if (err) {
       return res.status(500).send('Erro ao adicionar música: ' + err.message);
     }
-    res.status(200).send('Música adicionado com sucesso!');
+    res.status(200).send('Música adicionada com sucesso!');
   });
 });
 
@@ -77,7 +77,7 @@ app.put('/api/songs/:id', (req, res) => {
     if (err) {
       return res.status(500).send('Erro ao atualizar música: ' + err.message);
     }
-    res.status(200).send('música atualizado com sucesso!');
+    res.status(200).send('Música atualizada com sucesso!');
   });
 });
 
@@ -92,9 +92,34 @@ app.delete('/api/songs/:id', (req, res) => {
     if (err) {
       return res.status(500).send('Erro ao deletar música: ' + err.message);
     }
-    res.status(200).send('música removido com sucesso!');
+    res.status(200).send('Música removida com sucesso!');
   });
 });
+
+app.get('/api/songs/:id', (req, res) => {
+
+  const id = req.params.id;
+  const myQuery = `SELECT * FROM ${NOME_TABELA} WHERE id = ${id}`;
+  connection.query(myQuery, (err, results) => {
+    if (err) {
+      return res.status(500).send('Erro ao buscar música: ' + err.message);
+    }
+    res.json(results);
+  });
+  
+});
+
+let pricePerlike = 0.5;
+
+app.get('/api/price', (req, res) => {
+
+    res.json(
+      {
+      "price" : pricePerlike
+      }
+    );
+  });
+
 
 
 app.listen(port, () => {
