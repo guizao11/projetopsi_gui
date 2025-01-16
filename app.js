@@ -84,9 +84,7 @@ app.put('/api/songs/:id', (req, res) => {
 
 app.delete('/api/songs/:id', (req, res) => {
   const id = req.params.id;
-
   const query = `DELETE FROM ${NOME_TABELA} WHERE id = ${id}`;
-
   connection.query(query, (err, results) => {
     
     if (err) {
@@ -112,7 +110,6 @@ app.get('/api/songs/:id', (req, res) => {
 let pricePerlike = 0.5;
 
 app.get('/api/price', (req, res) => {
-
     res.json(
       {
       "price" : pricePerlike
@@ -120,6 +117,64 @@ app.get('/api/price', (req, res) => {
     );
   });
 
+  app.put('/api/price', (req, res) => {
+    if (pricePerlike !=null ){
+     pricePerlike=req.body.price;
+     res.sendStatus(200)
+    }else{
+     res.sendStats(400)
+    }
+   });
+
+   
+   app.get('/api/songs/:id/revenue', (req, res) => {
+    const id = req.params.id;
+    const myQuery = `SELECT * FROM ${NOME_TABELA} WHERE id = ${id}`;
+    connection.query(myQuery, (err, results) => {
+      if (err) {
+        return res.status(404).send('Erro ao buscar a receita: ' + err.message);
+      }
+      res.json({"Receita dos likes": pricePerlike*results[0].likes});
+    });
+  });
+
+const bands = [
+  {
+    "artist": "Poze do Rodo",
+    "band_members": ["Poze do Rodo"]
+  },
+  {
+    "artist": "Queen",
+    "band_members":[ "Freddie Mercury",
+                      "Brian May",
+                      "Roger Taylor",
+                      "Jonh Deacon"]
+  },
+  {
+    "artist": "Adele",
+    "band_members": ["Adele"]
+  }
+]
+
+app.get('/api/songs/:id/band', (req, res) => {    
+  const id = req.params.id;  
+  const myQuery = `SELECT artist FROM ${NOME_TABELA} WHERE id = ${id}`;
+connection.query(myQuery, (err, results) => {
+
+  if (err) {
+      return res.status(404).send('Erro a aceder à base de dados: ' + err.message);
+  }
+
+  const artist=results[0].artist;
+  for (let i = 0 ; i < bands.length; i++){
+      if (results[0].artist==bands[i].artist){
+     return res.json(bands[i])
+      }
+  }
+
+  return res.status(404).send('Erro ao encontrar os membros da banda: ');
+
+});
 
 
 app.listen(port, () => {
