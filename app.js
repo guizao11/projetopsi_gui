@@ -88,7 +88,7 @@ app.delete('/api/songs/:id', (req, res) => {
   connection.query(query, (err, results) => {
     
     if (err) {
-      return res.status(500).send('Erro ao deletar música: ' + err.message);
+      return res.status(404).send('Erro ao apagar música: ' + err.message);
     }
     res.status(200).send('Música removida com sucesso!');
   });
@@ -100,7 +100,7 @@ app.get('/api/songs/:id', (req, res) => {
   const myQuery = `SELECT * FROM ${NOME_TABELA} WHERE id = ${id}`;
   connection.query(myQuery, (err, results) => {
     if (err) {
-      return res.status(500).send('Erro ao buscar música: ' + err.message);
+      return res.status(404).send('Erro ao buscar música: ' + err.message);
     }
     res.json(results);
   });
@@ -164,18 +164,38 @@ connection.query(myQuery, (err, results) => {
   if (err) {
       return res.status(404).send('Erro a aceder à base de dados: ' + err.message);
   }
-
-  const artist=results[0].artist;
   for (let i = 0 ; i < bands.length; i++){
+    const artist=results[0].artist;
       if (results[0].artist==bands[i].artist){
      return res.json(bands[i])
       }
   }
-
   return res.status(404).send('Erro ao encontrar os membros da banda: ');
+});
 
 });
 
+app.post('/api/songs/:id/band', (req, res) => {
+  const band_members = req.band_members;
+  const myQuery = `SELECT artist FROM ${NOME_TABELA} WHERE id = ${id}`;
+  connection.query(query, (err, results) => {
+    if (err) {
+      return res.status(404).send('Erro ao adicionar artista e membros da banda: ' + err.message);
+    }
+  }); 
+  const artist= results[0].artist;
+  const newBand= {
+    "artist": "", 
+    "band_members": band_members
+  }
+  band_members.push (newBand);
+
+});
+
+app.put('/api/songs/:id/band', (req, res) => {
+const artist= results[0].artist;
+
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on http://localhost:${port}`)
