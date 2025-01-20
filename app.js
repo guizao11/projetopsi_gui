@@ -104,7 +104,7 @@ app.get('/api/songs/:id', (req, res) => {
     }
     res.json(results);
   });
-  
+
 });
 
 let pricePerlike = 0.5;
@@ -126,7 +126,7 @@ app.get('/api/price', (req, res) => {
     }
    });
 
-   
+
    app.get('/api/songs/:id/revenue', (req, res) => {
     const id = req.params.id;
     const myQuery = `SELECT * FROM ${NOME_TABELA} WHERE id = ${id}`;
@@ -177,7 +177,7 @@ connection.query(myQuery, (err, results) => {
 
 app.post('/api/songs/:id/band', (req, res) => {
   const band_members = req.band_members;
-  const myQuery = `SELECT artist FROM ${NOME_TABELA} WHERE id = ${id}`;
+  const myQuery = `SELECT artist FROM ${NOME_TABELA} WHERE id = ${req.params.id}`;
   connection.query(query, (err, results) => {
     if (err) {
       return res.status(404).send('Erro ao adicionar artista e membros da banda: ' + err.message);
@@ -189,14 +189,31 @@ app.post('/api/songs/:id/band', (req, res) => {
     "band_members": band_members
   }
   band_members.push (newBand);
-
 });
 
 app.put('/api/songs/:id/band', (req, res) => {
-const artist= results[0].artist;
+const myQuery = `SELECT artist FROM ${NOME_TABELA} WHERE id = ${req.params.id}`;
+connection.query(myQuery, (err, results) => {
+
+  if (err) {
+      return res.status(500).send('Erro a aceder à base de dados: ' + err.message);
+  }
+  for (let i= 0; i < bands.length; i++){
+    if (bands[i].artist == results[0].artist) {
+      bands[i].band_members = req.body.band_members
+      return res.status(200).send("Membros da banda atualizados")    
+    }
+  }
+  res.status(404).send("Membros da banda não atualizados")
+
+});
+});
+
+app.delete('/api/songs/:id/band' , (req,res) => {
+
 
 });
 
 app.listen(port, () => {
   console.log(`Example app listening on http://localhost:${port}`)
-})
+});
