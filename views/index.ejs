@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script scr="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
 </head>
 <body>
+
+    <header>
+        <%- include('partials/header') %> 
+    </header>
+    <h1> Bem-Vindo à página inicial </h1>
     
+    <p> Esta é a página inicial da aplicação PSIFY.</p>
+    <p> Utilize o menu acima para navegar pelas diferentes funcionalidades da aplicação</p>
+    <p> Obter uma música</p>
+
+    <form id="id-musica">
+        <label for="idmusic"> ID da música: </label>
+        <input type="idmusic" name="idmusic" id="idmusic">
+        <button type="submit"> Obter </button>
+    </form>
+
 </body>
 </html>

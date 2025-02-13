@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <%- include('partials/header') %> 
+    </header>
+
+    <h1> Criar nova música</h1>
+
+    <form id="novamus">
+        <label for="title"> Titulo: </label>
+        <input type="text" name="title" id="title">
+        <br>
+        <label for="artist"> Artista: </label>
+        <input type="text" name="artist" id="artist">
+        <br>
+        <label for="genre"> Género: </label>
+        <input type="text" name="genre" id="genre">
+        <br>
+        <label for="album"> Album: </label>
+        <input type="text" name="album" id="album">
+        <br>
+        <label for="duration_seconds"> Duração (segundos): </label>
+        <input type="text" name="duration_seconds" id="duration_seconds">
+        <br>
+        <label for="release_date"> Data de lançamento: </label>
+        <input type="date" name="release_date" id="release_date">
+        <br>
+        <label for="likes"> Número de Likes: </label>
+        <input type="text" name="likes" id="likes">
+        <br>
+        <button type="submit"> Criar música </button>
+    </form>
+</body>
+</html>
