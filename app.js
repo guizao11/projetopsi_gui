@@ -147,7 +147,7 @@ app.delete('/api/songs/:id', (req, res) => {
 
   const query = `DELETE FROM ${NOME_TABELA} WHERE id = ${id}`;
 
-  connection.query(query, (err, results) => {
+  1connection.query(query, (err, results) => {
     if (err) {
       return res.status(500).send('Erro ao remover música: ' + err.message);
     }
@@ -253,7 +253,7 @@ app.get('/api/songs/:id/band', (req, res) => {
         }
         return res.status(404).send('Não encontrado membros de bandas para o artista: ' + results[0].artist);
       } else {
-        res.status(404).send('Música com o seguinte id não foi encontrada: ' + id);
+        res.status(404).send('Música não foi encontrada: ' + id);
       }
   });
 });
@@ -294,7 +294,7 @@ app.post('/api/songs/:id/band', (req, res) => {
           bands.push({"artist": artist, "band_members": band_members});
           return res.status(200).send('Banda adicionada com sucesso para o artista: ' + artist);
         } else {
-          res.status(404).send('Música com o seguinte id não foi encontrada: ' + id);
+          res.status(404).send('Música não foi encontrada: ' + id);
         }
     });
 });
@@ -363,12 +363,12 @@ app.delete('/api/songs/:id/band', (req, res) => {
 
             bands.splice(i, 1);
 
-            return res.status(200).send('Band removida com sucesso para o artista: ' + artist);
+            return res.status(200).send('Banda removida com sucesso para o artista: ' + artist);
           }
         }
-        return res.status(404).send('Não encontrado membros de bandas para o artista: ' + results[0].artist);
+        return res.status(404).send('Não foi encontrado membros de bandas para o artista: ' + results[0].artist);
       } else {
-        res.status(404).send('Música com o seguinte id não foi encontrada: ' + id);
+        res.status(404).send('Música com o este id não foi encontrada: ' + id);
       }
   });
 
@@ -401,18 +401,27 @@ app.post('/api/songs/bulk', (req, res) => {
   res.status(201).send('Músicas adicionadas com sucesso!');
 });
 
-app.get('/', (require,res) => {
+app.get('/', (req,res) => {
     res.render("index")
 });
 
-app.get('/song', (require,res) => {
-  res.render("song")
+app.get('/songs', (req,res) => {
+  res.render("songs")
 });
 
-app.get('/new-song', (require,res) => {
+app.get('/new-song', (req,res) => {
   res.render("new-song")
 });
 
-app.get('/price', (require,res) => {
-  res.render("price")
+app.get('/price', (req,res) => {
+  res.render("price", {price:pricePerLike})
 });
+
+app.get('/index', (req,res) => {
+  res.render("index")
+});
+
+app.put('/new-song', (req,res) => {
+
+
+})
