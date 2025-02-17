@@ -3,19 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>PSIFY</title>
 </head>
 <body>
     <header>
         <%- include('partials/header') %> 
     </header>
+    
     <h1> Listagem de músicas disponíveis</h1>
     <br><br>
 
     <table>
-        <tr>
-            ID
-        </tr>
+    <tr>
+        <th>
+           Titulo
+        </th>
+        <th>
+            Artista
+         </th>
+         <th>
+            Album
+         </th>
+         <th>
+            Genre
+         </th>
+         <th>
+            Duration (sec)
+         </th>
+         <th>
+            Likes
+         </th>
+         <th>
+            Release Date
+         </th>
+    </th>
     </table>
+
+    
 </body>
 </html>

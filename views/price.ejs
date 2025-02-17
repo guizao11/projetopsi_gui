@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>PSIFY</title>
 </head>
 <body>
@@ -17,5 +18,23 @@
         <input type="text" name="likes" id="likes" value="<%= price %>">
         <button type="submit"> Atualizar preço </button>
     </form>
+
+    <script>
+        document.getElementById('pricelike').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+    
+            axios.post(`/api/price`, data)
+            .then(response => {
+                console.log('Success:', response.data);
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 </body>
 </html>

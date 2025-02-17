@@ -1,11 +1,10 @@
-const express = require('express')
+const express = require('express');
 const mysql = require('mysql2');
-const axios = require ('axios')
+const axios = require('axios');
 const app = express()
 
 const port = 3011
 const NOME_TABELA = "songs"
-
 
 app.use(express.json());
 
@@ -21,7 +20,6 @@ const connection = mysql.createConnection({
   database: 'songs',         
   port: 3306
 });
-
 
 connection.connect((err) => {
   if (err) {
@@ -97,13 +95,13 @@ app.get('/api/songs', (req, res) => {
 
 app.post('/api/songs', (req, res) => {
 
-  const {title, artist, album, genre, duration_seconds, release_date, likes} = req.body;
+  const {title, artist, album, genre, duration_seconds, released_date, likes} = req.body;
 
   if (!title || !artist) {
     return res.status(400).send('Campos obrigatórios: title, artist');
   }
 
-  const query = `INSERT INTO ${NOME_TABELA} (title, artist, album, genre, duration_seconds, release_date, likes) VALUES ("${title}", "${artist}", "${album}", "${genre}", "${duration_seconds}", "${release_date}", "${likes}")`;
+  const query = `INSERT INTO ${NOME_TABELA} (title, artist, album, genre, duration_seconds, released_date, likes) VALUES ("${title}", "${artist}", "${album}", "${genre}", "${duration_seconds}", "${released_date}", "${likes}")`;
 
   connection.query(query, (err, results) => {
     if (err) {
@@ -122,13 +120,13 @@ app.put('/api/songs/:id', (req, res) => {
     return res.status(400).send('ID da música não é válido');
   }
 
-  const {title, artist, album, genre, duration_seconds, release_date, likes} = req.body;
+  const {title, artist, album, genre, duration_seconds, released_date, likes} = req.body;
 
   if (!title || !artist) {
     return res.status(400).send('Campos obrigatórios: title, artist');
   }
 
-  const query = `UPDATE ${NOME_TABELA} SET title = "${title}", artist = "${artist}", album = "${album}", genre = "${genre}", duration_seconds = "${duration_seconds}", release_date = "${release_date}", likes = "${likes}" WHERE id = "${id}"`;
+  const query = `UPDATE ${NOME_TABELA} SET title = "${title}", artist = "${artist}", album = "${album}", genre = "${genre}", duration_seconds = "${duration_seconds}", released_date = "${released_date}", likes = "${likes}" WHERE id = "${id}"`;
 
   connection.query(query, (err, results) => {
     if (err) {
@@ -147,7 +145,7 @@ app.delete('/api/songs/:id', (req, res) => {
 
   const query = `DELETE FROM ${NOME_TABELA} WHERE id = ${id}`;
 
-  1connection.query(query, (err, results) => {
+  connection.query(query, (err, results) => {
     if (err) {
       return res.status(500).send('Erro ao remover música: ' + err.message);
     }
@@ -383,13 +381,13 @@ app.post('/api/songs/bulk', (req, res) => {
 
   for(let i = 0; i < newSongs.length; i++) {
     
-    const {title, artist, album, genre, duration_seconds, release_date, likes} = newSongs[i];
+    const {title, artist, album, genre, duration_seconds, released_date, likes} = newSongs[i];
 
     if (!title || !artist) {
       return res.status(400).send('Campos obrigatórios: title, artist');
     }
 
-    const query = `INSERT INTO ${NOME_TABELA} (title, artist, album, genre, duration_seconds, release_date, likes) VALUES ("${title}", "${artist}", "${album}", "${genre}", "${duration_seconds}", "${release_date}", "${likes}")`;
+    const query = `INSERT INTO ${NOME_TABELA} (title, artist, album, genre, duration_seconds, released_date, likes) VALUES ("${title}", "${artist}", "${album}", "${genre}", "${duration_seconds}", "${released_date}", "${likes}")`;
 
     connection.query(query, (err, results) => {
       if (err) {
@@ -421,7 +419,7 @@ app.get('/index', (req,res) => {
   res.render("index")
 });
 
-app.put('/new-song', (req,res) => {
+app.post('/new-song', (req,res) => {
 
 
-})
+});

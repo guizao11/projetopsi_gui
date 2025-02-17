@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>PSIFY</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
 
     <h1> Criar nova música</h1>
 
-    <form id="novamus">
+    <form id="novamus-form">
         <label for="title"> Titulo: </label>
         <input type="text" name="title" id="title">
         <br><br>
@@ -28,13 +29,33 @@
         <label for="duration_seconds"> Duração (segundos): </label>
         <input type="text" name="duration_seconds" id="duration_seconds">
         <br><br>
-        <label for="release_date"> Data de lançamento: </label>
-        <input type="date" name="release_date" id="release_date">
+        <label for="released_date"> Data de lançamento: </label>
+        <input type="date" name="released_date" id="released_date">
         <br><br>
         <label for="likes"> Número de Likes: </label>
         <input type="text" name="likes" id="likes">
         <br><br>
-        <button type="submit"> Criar música </button>
+        <button type="submit"> Criar nova música </button>
     </form>
+
+
+    <script>
+        document.getElementById('novamus-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+    
+            axios.post(`/api/songs`, data)
+            .then(response => {
+                console.log('Success:', response.data);
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
 </body>
 </html>
