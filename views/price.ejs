@@ -14,8 +14,8 @@
     <h1> Editar preço por like:</h1>
 
     <form id="pricelike">
-        <label for="likes"> Número de Likes: </label>
-        <input type="text" name="likes" id="likes" value="<%= price %>">
+        <label for="price"> Número de Likes: </label>
+        <input type="text" name="price" id="price" placeholder="<%= price %>">
         <button type="submit"> Atualizar preço </button>
     </form>
 
@@ -26,7 +26,7 @@
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
     
-            axios.post(`/api/price`, data)
+            axios.put(`/api/price`, data)
             .then(response => {
                 console.log('Success:', response.data);
                 location.reload();

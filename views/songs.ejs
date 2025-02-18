@@ -7,39 +7,53 @@
     <title>PSIFY</title>
 </head>
 <body>
-    <header>
-        <%- include('partials/header') %> 
-    </header>
+        <%- include('partials/header') %>
     
-    <h1> Listagem de músicas disponíveis</h1>
-    <br><br>
+    <h2> Listagem de músicas disponíveis</h2>
+    <br>
 
-    <table>
+    <table border="1">
     <tr>
-        <th>
-           Titulo
-        </th>
-        <th>
-            Artista
-         </th>
-         <th>
-            Album
-         </th>
-         <th>
-            Genre
-         </th>
-         <th>
-            Duration (sec)
-         </th>
-         <th>
-            Likes
-         </th>
-         <th>
-            Release Date
-         </th>
-    </th>
-    </table>
-
+        <th> Titulo </th>
+        <th> Artista </th>
+        <th> Album </th>
+        <th> Género </th>
+        <th> Duração (sec) </th>
+        <th> Likes </th>
+        <th> Data de Lançamento </th>
+        <th> Eliminar</th>
+    </tr>
     
+    <% for (let i = 0; i < songs.length; i++) { %>
+      <tr>
+         <td> <%= songs[i].id %> </td>
+         <td> <%= songs[i].artist %> </td>
+         <td> <%= songs[i].album %> </td>
+         <td> <%= songs[i].genre %> </td>
+         <td> <%= songs[i].duration_seconds %> </td>
+         <td> <%= songs[i].likes %> </td>
+         <td> <%= songs[i].released_date %> </td>
+         <td> <button onclick="eliminar(<%= songs[i].id %>)"> Eliminar </button> </td>
+      </tr>
+   <% } %>
+</table>
+
+<script>
+   function eliminar(index){
+   let id= index;
+   axios.delete(`/api/songs/${id}`)
+   .then(response => {
+       console.log('Success:', response.data);
+       location.reload();
+   })
+   .catch((error) => {
+       console.error('Error:', error);
+   });
+}
+</script>
+
+<h2> Receitas: </h2>
+
+</script>
 </body>
 </html>

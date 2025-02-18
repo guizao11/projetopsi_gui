@@ -404,9 +404,17 @@ app.get('/', (req,res) => {
 });
 
 app.get('/songs', (req,res) => {
-  res.render("songs")
-});
 
+  axios.get(`http://localhost:${port}/api/songs`)
+  .then(response => {
+      console.log('Success:', response.data);
+      res.render("songs", {songs: response.data})
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
+});
+ 
 app.get('/new-song', (req,res) => {
   res.render("new-song")
 });
@@ -417,9 +425,4 @@ app.get('/price', (req,res) => {
 
 app.get('/index', (req,res) => {
   res.render("index")
-});
-
-app.post('/new-song', (req,res) => {
-
-
 });
