@@ -8,5 +8,59 @@
 </head>
 <body>
     <%- include('partials/header') %>
+
+    <table border="1">
+        <tr>
+            <th> Titulo </th>
+            <th> Artista </th>
+            <th> Album </th>
+            <th> Género </th>
+            <th> Duração (sec) </th>
+            <th> Likes </th>
+            <th> Data de Lançamento </th>
+            <th> Eliminar</th>
+        </tr>
+
+        <tr>
+             <td> <%= songs[0].id %> </td>
+             <td> <%= songs[0].artist %> </td>
+             <td> <%= songs[0].album %> </td>
+             <td> <%= songs[0].genre %> </td>
+             <td> <%= songs[0].duration_seconds %> </td>
+             <td> <%= songs[0].likes %> </td>
+             <td> <%= songs[0].released_date %> </td>
+             <td> <button onclick="editar( <%= songs[0].id %> )"> Editar </button> </td>
+        </tr>
+    </table>
+
+    <h1> Receitas: </h1>
+    <br><br>
+    
+    <h1> Editar música:</h1>
+
+    <form id="updatemus">
+        <label for="title"> Titulo: </label>
+        <input type="text" name="title" id="title">
+        <br><br>
+        <label for="artist"> Artista: </label>
+        <input type="text" name="artist" id="artist">
+        <br><br>
+        <label for="genre"> Género: </label>
+        <input type="text" name="genre" id="genre">
+        <br><br>
+        <label for="album"> Album: </label>
+        <input type="text" name="album" id="album">
+        <br><br>
+        <label for="duration_seconds"> Duração (segundos): </label>
+        <input type="text" name="duration_seconds" id="duration_seconds">
+        <br><br>
+        <label for="released_date"> Data de lançamento: </label>
+        <input type="date" name="released_date" id="released_date">
+        <br><br>
+        <label for="likes"> Número de Likes: </label>
+        <input type="text" name="likes" id="likes">
+        <br><br>
+        <button type="submit"> Criar nova música </button>
+    </form>
 </body>
 </html>

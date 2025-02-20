@@ -33,7 +33,7 @@
          <td> <%= songs[i].duration_seconds %> </td>
          <td> <%= songs[i].likes %> </td>
          <td> <%= songs[i].released_date %> </td>
-         <td> <button onclick="eliminar(<%= songs[i].id %>)"> Eliminar </button> </td>
+         <td> <button onclick="eliminar( <%= songs[i].id %> )"> Eliminar </button> </td>
       </tr>
    <% } %>
 </table>
@@ -50,10 +50,6 @@
        console.error('Error:', error);
    });
 }
-</script>
-
-<h2> Receitas: </h2>
-
 </script>
 </body>
 </html>
