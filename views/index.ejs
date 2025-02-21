@@ -8,9 +8,8 @@
 </head>
 <body>
 
-    <header>
-        <%- include('partials/header') %> 
-    </header>
+    <%- include('partials/header') %> 
+
     <h1> Bem-Vindo à página inicial </h1>
     
     <p> Esta é a página inicial da aplicação PSIFY.</p>
@@ -19,8 +18,15 @@
 
     <form id="id-musica">
         <label for="id"> ID da música: </label>
-        <input type="id" name="id" id="id">
-        <button type="submit"> Obter </button>
+        <input type="text" name="id" id="id">
+        <button type="submit" onclick="redmus()"> Obter </button>
     </form>
+
+    <script>
+        function redmus() {
+            let id = document.getElementById("id").value
+            window.location.href = `/songs/${id}`;
+        }
+    </script>
 </body>
 </html>

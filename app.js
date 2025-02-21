@@ -414,7 +414,20 @@ app.get('/songs', (req,res) => {
       console.error('Error:', error);
   });
 });
- 
+
+app.get('/song/:id', (req,res) => {
+const id= req.params.id;
+
+  axios.get(`http://localhost:${port}/api/songs/${idm}`)
+  .then(response => {
+      console.log('Success:', response.data);
+      res.render("song", {songs: response.data})
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
+}); 
+
 app.get('/new-song', (req,res) => {
   res.render("new-song")
 });
